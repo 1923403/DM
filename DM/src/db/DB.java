@@ -9,15 +9,35 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class DB {
+	public static ArrayList<LinkedHashMap<String, String>> konvertiereJava(ResultSet rs) throws SQLException {
+		ArrayList<LinkedHashMap<String, String>> daten = new ArrayList<>();
+		int anz_spalten = rs.getMetaData().getColumnCount();
+		if (anz_spalten == 0)
+			return daten;
+		while (rs.next()) {
+			LinkedHashMap<String, String> datensatz = new LinkedHashMap<>();
+			for (int i = 1; i < anz_spalten; i++) {
+				String name = rs.getMetaData().getColumnName(i);
+				String wert = rs.getString(name);
+				if (wert != null)
+					datensatz.put(name, wert);
+				else
+					datensatz.put(name, "");
+			}
+			daten.add(datensatz);
+		}
+		return daten;
+	}
+
 	private Connection con = null;
 	private int counterPrepared = 1;
+
 	private PreparedStatement ps = null;
 
-//	public DB() {
+//	public DB(String db, String user, String pass) {
 //		try {
 //			Class.forName("com.mysql.jdbc.Driver").newInstance();
-//			String kommando = "jdbc:mysql://localhost/" + Zugangsdaten.db + "?user=" + Zugangsdaten.user + "&password="
-//					+ Zugangsdaten.pass;
+//			String kommando = "jdbc:mysql://localhost/" + db + "?user=" + user + "&password=" + pass;
 //			this.con = DriverManager.getConnection(kommando);
 //		} catch (Exception e) {
 //			e.printStackTrace();
@@ -25,10 +45,10 @@ public class DB {
 //		}
 //	}
 
-	public DB(String db, String user, String pass) {
+	public DB() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			String kommando = "jdbc:mysql://localhost/" + db + "?user=" + user + "&password=" + pass;
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String kommando = "jdbc:mysql://localhost/kis?user=root&password=";
 			this.con = DriverManager.getConnection(kommando);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,7 +76,7 @@ public class DB {
 
 	public ArrayList<LinkedHashMap<String, String>> lesenJava() {
 		try {
-			return this.konvertiereJava(this.ps.executeQuery());
+			return DB.konvertiereJava(this.ps.executeQuery());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("DB lesenJava: " + e.getMessage());
@@ -151,26 +171,6 @@ public class DB {
 			e.printStackTrace();
 			throw new RuntimeException("DB setString'" + s + "': " + e.getMessage());
 		}
-	}
-
-	private ArrayList<LinkedHashMap<String, String>> konvertiereJava(ResultSet rs) throws SQLException {
-		ArrayList<LinkedHashMap<String, String>> daten = new ArrayList<>();
-		int anz_spalten = rs.getMetaData().getColumnCount();
-		if (anz_spalten == 0)
-			return daten;
-		while (rs.next()) {
-			LinkedHashMap<String, String> datensatz = new LinkedHashMap<>();
-			for (int i = 1; i < anz_spalten; i++) {
-				String name = rs.getMetaData().getColumnName(i);
-				String wert = rs.getString(name);
-				if (wert != null)
-					datensatz.put(name, wert);
-				else
-					datensatz.put(name, "");
-			}
-			daten.add(datensatz);
-		}
-		return daten;
 	}
 
 	private String konvertiereXML(ResultSet rs) throws SQLException {
