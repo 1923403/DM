@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class TestTransaktion {
 	public static void main(String[] args) throws Exception {
@@ -18,7 +17,7 @@ public class TestTransaktion {
 			con.setAutoCommit(false);
 			ps = con.prepareStatement("SELECT * FROM mitarbeiter WHERE vorname=?");
 			ps.setString(1, "Mohammed");
-			ResultSet rs = ps.executeQuery();
+//			ResultSet rs = ps.executeQuery();
 //			String personalnummer = DB.konvertiereJava(rs).get(0).get("personalnummer");
 			ps.close();
 			ps = con.prepareStatement(

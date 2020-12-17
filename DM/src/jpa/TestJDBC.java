@@ -8,7 +8,7 @@ import db.DB;
 public class TestJDBC {
 
 	public static void main(String[] args) {
-		var db = new DB(Zugangsdaten.db, Zugangsdaten.user, Zugangsdaten.pass);
+		var db = new DB("dm");
 		ArrayList<LinkedHashMap<String, String>> daten;
 		db.setSQL("SELECT * FROM Vorlesung;");
 		daten = db.lesenJava();

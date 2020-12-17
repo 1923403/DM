@@ -11,9 +11,9 @@ public class TestJPASchreiben {
 		EntityManager db = null;
 
 		try {
-			Professor p = new Professor(65, "Dopatka");
-			Vorlesung v1 = new Vorlesung(17, "Datenmanagement", 5, 65);
-			Vorlesung v2 = new Vorlesung(32, "Programmieren 2", 5, 65);
+			Professor p = new Professor(1, 65, "Dopatka");
+			Vorlesung v1 = new Vorlesung(17, "Datenmanagement", 5, p);
+			Vorlesung v2 = new Vorlesung(32, "Programmieren 2", 5, p);
 			factory = Persistence.createEntityManagerFactory("dm");
 			db = factory.createEntityManager();
 			db.getTransaction().begin();

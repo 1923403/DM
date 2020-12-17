@@ -56,6 +56,17 @@ public class DB {
 		}
 	}
 
+	public DB(String db) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String kommando = "jdbc:mysql://localhost/" + db + "?user=root&password=";
+			this.con = DriverManager.getConnection(kommando);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Der DB-Zugang ist nicht vorhanden!");
+		}
+	}
+
 	public void close() {
 		this.finalize();
 	}
