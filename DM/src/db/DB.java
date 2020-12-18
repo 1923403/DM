@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class DB {
+	private Connection con = null;
+
+	private int counterPrepared = 1;
+	private PreparedStatement ps = null;
+
 	public static ArrayList<LinkedHashMap<String, String>> konvertiereJava(ResultSet rs) throws SQLException {
 		ArrayList<LinkedHashMap<String, String>> daten = new ArrayList<>();
 		int anz_spalten = rs.getMetaData().getColumnCount();
@@ -16,7 +21,7 @@ public class DB {
 			return daten;
 		while (rs.next()) {
 			LinkedHashMap<String, String> datensatz = new LinkedHashMap<>();
-			for (int i = 1; i < anz_spalten; i++) {
+			for (int i = 1; i <= anz_spalten; i++) {
 				String name = rs.getMetaData().getColumnName(i);
 				String wert = rs.getString(name);
 				if (wert != null)
@@ -28,22 +33,6 @@ public class DB {
 		}
 		return daten;
 	}
-
-	private Connection con = null;
-	private int counterPrepared = 1;
-
-	private PreparedStatement ps = null;
-
-//	public DB(String db, String user, String pass) {
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver").newInstance();
-//			String kommando = "jdbc:mysql://localhost/" + db + "?user=" + user + "&password=" + pass;
-//			this.con = DriverManager.getConnection(kommando);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			throw new RuntimeException("Der DB-Zugang ist nicht vorhanden!");
-//		}
-//	}
 
 	public DB() {
 		try {
@@ -60,6 +49,17 @@ public class DB {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String kommando = "jdbc:mysql://localhost/" + db + "?user=root&password=";
+			this.con = DriverManager.getConnection(kommando);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Der DB-Zugang ist nicht vorhanden!");
+		}
+	}
+
+	public DB(String db, String user, String pass) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String kommando = "jdbc:mysql://localhost/" + db + "?user=" + user + "&password=" + pass;
 			this.con = DriverManager.getConnection(kommando);
 		} catch (Exception e) {
 			e.printStackTrace();
