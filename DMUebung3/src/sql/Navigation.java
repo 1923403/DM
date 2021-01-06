@@ -21,11 +21,10 @@ public class Navigation {
 				this.verbindungHerstellen();
 				break;
 			case "2":
-				System.out.println("\nProgramm wird beendet...");
-				System.exit(0);
+				this.programmBeenden();
 				break;
 			default:
-				System.err.println("\nAktion nicht vorhanden, bitte erneut eingeben!");
+				this.fehlermeldungAusgeben();
 				this.zeigeStartmenue();
 				break;
 		}
@@ -71,7 +70,7 @@ public class Navigation {
 			case "1":
 				System.out.println("\nBitte geben Sie Ihr SQL-Statement ein:");
 				var sqlStatement = Benutzereingabe.lese();
-				System.out.println(sqlStatement);
+				// TODO: Statement weiterleiten
 				this.sqlStatementEingeben();
 				break;
 			case "2":
@@ -79,13 +78,21 @@ public class Navigation {
 				this.zeigeStartmenue();
 				break;
 			case "3":
-				System.out.println("\nProgramm wird beendet...");
-				System.exit(0);
+				this.programmBeenden();
 				break;
 			default:
-				System.err.println("\nAktion nicht vorhanden, bitte erneut eingeben!");
+				this.fehlermeldungAusgeben();
 				this.zeigeStartmenue();
 				break;
 		}
+	}
+
+	private void programmBeenden() {
+		System.out.println("\nProgramm wird beendet...");
+		System.exit(0);
+	}
+
+	private void fehlermeldungAusgeben() {
+		System.err.println("\nAktion nicht vorhanden, bitte erneut eingeben!");
 	}
 }
