@@ -26,7 +26,6 @@ public class Datenbank {
 		try {
 			return this.konvertiereZuJava(this.preparedStatement.executeQuery());
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new RuntimeException("Fehler beim Verarbeiten des Statements: " + e.getMessage());
 		}
 	}
