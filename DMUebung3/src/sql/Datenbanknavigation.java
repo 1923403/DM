@@ -7,7 +7,7 @@ public class Datenbanknavigation {
 		this.datenzugriff = new Datenzugriff();
 	}
 
-	public void zeigeStartmenue() {
+	public void startbildschirm() {
 		System.out.println("\n============================================");
 		System.out.println("[1] - Verbindung zu einer Datenbank herstellen");
 		System.out.println("[2] - Programm beenden");
@@ -25,7 +25,7 @@ public class Datenbanknavigation {
 				break;
 			default:
 				this.fehlermeldungAusgeben();
-				this.zeigeStartmenue();
+				this.startbildschirm();
 				break;
 		}
 	}
@@ -44,16 +44,22 @@ public class Datenbanknavigation {
 		System.out.println("Bitte geben Sie das Passwort ein:");
 		var passwort = Benutzereingabe.lese();
 
-		this.datenzugriff.verbindungHerstellen(datenbank, benutzername, passwort);
-
-		if (this.datenzugriff.verbindungHergestellt()) {
-			System.out.println("\n============================================");
-			System.out.println("Verbindung erfolgreich hergestellt!");
-			System.out.println("============================================\n");
-			this.sqlStatementEingeben();
-		} else {
-			this.verbindungHerstellen();
+		try {
+			this.datenzugriff.verbindungHerstellen(datenbank, benutzername, passwort);
+		} catch (Exception e) {
+			System.err.println(
+					"\nDer Zugriff auf die angegebene Datenbank ist nicht möglich, bitte überprüfen Sie Ihre Eingaben!");
+			if (this.erneutVersuchen())
+				this.verbindungHerstellen();
+			else
+				this.startbildschirm();
 		}
+
+		System.out.println("\n============================================");
+		System.out.println("Verbindung erfolgreich hergestellt!");
+		System.out.println("============================================\n");
+
+		this.sqlStatementEingeben();
 	}
 
 	private void sqlStatementEingeben() {
@@ -74,18 +80,43 @@ public class Datenbanknavigation {
 				this.sqlStatementEingeben();
 				break;
 			case "2":
-				System.out.println("\nVerbindung wird geschlossen...");
-				this.datenzugriff.verbindungSchliessen();
-				this.zeigeStartmenue();
+				this.verbindungSchliessen();
+				this.startbildschirm();
 				break;
 			case "3":
+				this.verbindungSchliessen();
 				this.programmBeenden();
 				break;
 			default:
 				this.fehlermeldungAusgeben();
-				this.zeigeStartmenue();
+				this.startbildschirm();
 				break;
 		}
+	}
+
+	private boolean erneutVersuchen() {
+		System.out.println("\n============================================");
+		System.out.println("[1] - Erneute Eingabe");
+		System.out.println("[2] - Vorgang abbrechen");
+		System.out.println("============================================\n");
+
+		System.out.println("Bitte wählen Sie eine Aktion:");
+		var eingabe = Benutzereingabe.lese();
+
+		switch (eingabe) {
+			case "1":
+				return true;
+			case "2":
+				return false;
+			default:
+				this.fehlermeldungAusgeben();
+				return this.erneutVersuchen();
+		}
+	}
+
+	private void verbindungSchliessen() {
+		System.out.println("\nVerbindung wird geschlossen...");
+		this.datenzugriff.verbindungSchliessen();
 	}
 
 	private void programmBeenden() {

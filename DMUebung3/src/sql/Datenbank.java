@@ -11,15 +11,10 @@ public class Datenbank {
 		return this.connection;
 	}
 
-	public Datenbank(String datenbank, String benutzer, String passwort) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/" + datenbank + "?user=" + benutzer + "&password=" + passwort;
-			this.connection = DriverManager.getConnection(url);
-		} catch (Exception e) {
-			System.err.println(
-					"\nDer Zugriff auf die angegebene Datenbank ist nicht möglich, bitte überprüfen Sie Ihre Eingaben!");
-		}
+	public Datenbank(String datenbank, String benutzer, String passwort) throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		String url = "jdbc:mysql://localhost/" + datenbank + "?user=" + benutzer + "&password=" + passwort;
+		this.connection = DriverManager.getConnection(url);
 	}
 
 	public void schliessen() {
