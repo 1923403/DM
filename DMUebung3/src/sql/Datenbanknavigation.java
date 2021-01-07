@@ -76,7 +76,8 @@ public class Datenbanknavigation {
 			case "1":
 				System.out.println("\nBitte geben Sie Ihr SQL-Statement ein:");
 				var sqlStatement = Benutzereingabe.lese();
-				// TODO: Statement weiterleiten
+				System.out.println();
+				this.datenzugriff.anfrageAbsetzen(sqlStatement);
 				this.sqlStatementEingeben();
 				break;
 			case "2":
@@ -89,7 +90,7 @@ public class Datenbanknavigation {
 				break;
 			default:
 				this.fehlermeldungAusgeben();
-				this.startbildschirm();
+				this.sqlStatementEingeben();
 				break;
 		}
 	}
