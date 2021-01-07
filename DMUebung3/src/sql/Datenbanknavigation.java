@@ -1,10 +1,10 @@
 package sql;
 
-public class Navigation {
+public class Datenbanknavigation {
 	private Datenzugriff datenzugriff;
 
-	public Navigation(Datenzugriff datenzugriff) {
-		this.datenzugriff = datenzugriff;
+	public Datenbanknavigation() {
+		this.datenzugriff = new Datenzugriff();
 	}
 
 	public void zeigeStartmenue() {
@@ -74,6 +74,7 @@ public class Navigation {
 				this.sqlStatementEingeben();
 				break;
 			case "2":
+				System.out.println("\nVerbindung wird geschlossen...");
 				this.datenzugriff.verbindungSchliessen();
 				this.zeigeStartmenue();
 				break;
