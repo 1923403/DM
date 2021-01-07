@@ -13,10 +13,7 @@ public class Datenbanknavigation {
 		System.out.println("[2] - Programm beenden");
 		System.out.println("============================================\n");
 
-		System.out.println("Bitte wählen Sie eine Aktion:");
-		var eingabe = Benutzereingabe.lese();
-
-		switch (eingabe) {
+		switch (this.aktionWaehlen()) {
 			case "1":
 				this.verbindungHerstellen();
 				break;
@@ -35,20 +32,15 @@ public class Datenbanknavigation {
 		System.out.println("Verbindung zu einer Datenbank herstellen");
 		System.out.println("============================================\n");
 
-		System.out.println("Bitte geben Sie den Namen der Datenbank ein:");
-		var datenbank = Benutzereingabe.lese();
-
-		System.out.println("Bitte geben Sie den Benutzernamen ein:");
-		var benutzername = Benutzereingabe.lese();
-
-		System.out.println("Bitte geben Sie das Passwort ein:");
-		var passwort = Benutzereingabe.lese();
+		var datenbank = this.eingabeDatenbank();
+		var benutzername = this.eingabeBenutzername();
+		var passwort = this.eingabePasswort();
 
 		try {
 			this.datenzugriff.verbindungHerstellen(datenbank, benutzername, passwort);
 		} catch (Exception e) {
 			System.err.println(
-					"\nDer Zugriff auf die angegebene Datenbank ist nicht möglich, bitte überprüfen Sie Ihre Eingaben!");
+					"\nDer Zugriff auf die angegebene Datenbank ist nicht möglich!");
 			if (this.erneutVersuchen())
 				this.verbindungHerstellen();
 			else
@@ -59,26 +51,20 @@ public class Datenbanknavigation {
 		System.out.println("Verbindung erfolgreich hergestellt!");
 		System.out.println("============================================\n");
 
-		this.sqlStatementEingeben();
+		this.sqlAuswahl();
 	}
 
-	private void sqlStatementEingeben() {
+	private void sqlAuswahl() {
 		System.out.println("\n============================================");
 		System.out.println("[1] - SQL-Statement eingeben");
 		System.out.println("[2] - Datenbankverbindung schließen");
 		System.out.println("[3] - Programm beenden");
 		System.out.println("============================================\n");
 
-		System.out.println("Bitte wählen Sie eine Aktion:");
-		var eingabe = Benutzereingabe.lese();
-
-		switch (eingabe) {
+		switch (this.aktionWaehlen()) {
 			case "1":
-				System.out.println("\nBitte geben Sie Ihr SQL-Statement ein:");
-				var sqlStatement = Benutzereingabe.lese();
-				System.out.println();
-				this.datenzugriff.anfrageAbsetzen(sqlStatement);
 				this.sqlStatementEingeben();
+				this.sqlAuswahl();
 				break;
 			case "2":
 				this.verbindungSchliessen();
@@ -90,7 +76,7 @@ public class Datenbanknavigation {
 				break;
 			default:
 				this.fehlermeldungAusgeben();
-				this.sqlStatementEingeben();
+				this.sqlAuswahl();
 				break;
 		}
 	}
@@ -101,10 +87,7 @@ public class Datenbanknavigation {
 		System.out.println("[2] - Vorgang abbrechen");
 		System.out.println("============================================\n");
 
-		System.out.println("Bitte wählen Sie eine Aktion:");
-		var eingabe = Benutzereingabe.lese();
-
-		switch (eingabe) {
+		switch (this.aktionWaehlen()) {
 			case "1":
 				return true;
 			case "2":
@@ -113,6 +96,18 @@ public class Datenbanknavigation {
 				this.fehlermeldungAusgeben();
 				return this.erneutVersuchen();
 		}
+	}
+
+	private void sqlStatementEingeben() {
+		System.out.println("\nBitte geben Sie Ihr SQL-Statement ein:");
+		var sqlStatement = this.benutzereingabe();
+
+		System.out.println();
+
+		this.datenzugriff.anfrageAbsetzen(sqlStatement);
+
+		System.out.println("\n[Mit beliebiger Eingabe fortsetzen]");
+		this.benutzereingabe();
 	}
 
 	private void verbindungSchliessen() {
@@ -127,5 +122,29 @@ public class Datenbanknavigation {
 
 	private void fehlermeldungAusgeben() {
 		System.err.println("\nAktion nicht vorhanden, bitte erneut eingeben!");
+	}
+
+	private String aktionWaehlen() {
+		System.out.println("Bitte wählen Sie eine Aktion:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeDatenbank() {
+		System.out.println("Bitte geben Sie den Namen der Datenbank ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeBenutzername() {
+		System.out.println("Bitte geben Sie den Benutzernamen ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabePasswort() {
+		System.out.println("Bitte geben Sie das Passwort ein:");
+		return this.benutzereingabe();
+	}
+
+	private String benutzereingabe() {
+		return Benutzereingabe.lese();
 	}
 }
