@@ -8,10 +8,10 @@ public class Datenbanknavigation {
 	}
 
 	public void startbildschirm() {
-		System.out.println("\n============================================");
+		this.abgrenzungOben();
 		System.out.println("[1] - Verbindung zu einer Datenbank herstellen");
 		System.out.println("[2] - Programm beenden");
-		System.out.println("============================================\n");
+		this.abgrenzungUnten();
 
 		switch (this.aktionWaehlen()) {
 			case "1":
@@ -28,9 +28,9 @@ public class Datenbanknavigation {
 	}
 
 	private void verbindungHerstellen() {
-		System.out.println("\n============================================");
+		this.abgrenzungOben();
 		System.out.println("Verbindung zu einer Datenbank herstellen");
-		System.out.println("============================================\n");
+		this.abgrenzungUnten();
 
 		var datenbank = this.eingabeDatenbank();
 		var benutzername = this.eingabeBenutzername();
@@ -47,19 +47,19 @@ public class Datenbanknavigation {
 				this.startbildschirm();
 		}
 
-		System.out.println("\n============================================");
+		this.abgrenzungOben();
 		System.out.println("Verbindung erfolgreich hergestellt!");
-		System.out.println("============================================\n");
+		this.abgrenzungUnten();
 
 		this.sqlAuswahl();
 	}
 
 	private void sqlAuswahl() {
-		System.out.println("\n============================================");
+		this.abgrenzungOben();
 		System.out.println("[1] - SQL-Statement eingeben");
 		System.out.println("[2] - Datenbankverbindung schließen");
 		System.out.println("[3] - Programm beenden");
-		System.out.println("============================================\n");
+		this.abgrenzungUnten();
 
 		switch (this.aktionWaehlen()) {
 			case "1":
@@ -82,10 +82,10 @@ public class Datenbanknavigation {
 	}
 
 	private boolean erneutVersuchen() {
-		System.out.println("\n============================================");
+		this.abgrenzungOben();
 		System.out.println("[1] - Erneute Eingabe");
 		System.out.println("[2] - Vorgang abbrechen");
-		System.out.println("============================================\n");
+		this.abgrenzungUnten();
 
 		switch (this.aktionWaehlen()) {
 			case "1":
@@ -146,5 +146,13 @@ public class Datenbanknavigation {
 
 	private String benutzereingabe() {
 		return Benutzereingabe.lese();
+	}
+
+	private void abgrenzungOben() {
+		System.out.println("\n============================================");
+	}
+
+	private void abgrenzungUnten() {
+		System.out.println("============================================\n");
 	}
 }
