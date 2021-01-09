@@ -30,7 +30,7 @@ public class Datenbank {
 		} catch (SQLException e) {
 			try {
 				this.preparedStatement.execute();
-				System.out.println("Operation erfolgreich durchgeführt!");
+				System.out.println("SQL-Statement erfolgreich ausgeführt!\n");
 				return new ArrayList<>();
 			} catch (Exception e2) {
 				throw new RuntimeException("Fehler beim Verarbeiten des Statements: " + e2.getMessage());
@@ -75,15 +75,6 @@ public class Datenbank {
 		}
 	}
 
-	public void setString(char c) {
-		try {
-			this.setString("" + c);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("DB setString '" + c + "': " + e.getMessage());
-		}
-	}
-
 	public void setString(String s) {
 		try {
 			this.preparedStatement.setString(this.positionPrepared++, s);
@@ -111,29 +102,12 @@ public class Datenbank {
 		}
 	}
 
-	public void setDouble(double d) {
-		try {
-			this.preparedStatement.setDouble(this.positionPrepared++, d);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("DB setDouble '" + d + "': " + e.getMessage());
-		}
-	}
-
-	public void setDouble(String s) {
-		try {
-			this.setDouble(Double.parseDouble(s));
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("DB setDouble '" + s + "': " + e.getMessage());
-		}
-	}
-
 	public void setDecimal(BigDecimal d) {
 		try {
 			this.preparedStatement.setBigDecimal(this.positionPrepared++, d);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			throw new RuntimeException("DB setDecimal '" + d + "': " + e.getMessage());
 		}
 	}
 
@@ -141,7 +115,8 @@ public class Datenbank {
 		try {
 			this.setDecimal(BigDecimal.valueOf(Double.parseDouble(s)));
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			throw new RuntimeException("DB setDecimal '" + s + "': " + e.getMessage());
 		}
 	}
 
