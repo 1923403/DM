@@ -17,6 +17,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void a1(String personalnummer) {
 		this.datenbank.setSQL("SELECT * FROM hauptwohnsitz WHERE hauptwohnsitz.personalnummer=?;");
 		this.datenbank.setInt(personalnummer);
@@ -24,6 +25,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void a2(String personalnummer) {
 		this.datenbank.setSQL("SELECT COUNT(versicherungsnummer) FROM versicherung WHERE personalnummer=?;");
 		this.datenbank.setInt(personalnummer);
@@ -31,6 +33,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void a3(String personalnummer) {
 		this.datenbank.setSQL("SELECT geschlecht FROM geschlecht WHERE geschlecht.personalnummer=?;");
 		this.datenbank.setInt(personalnummer);
@@ -38,6 +41,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void a4(String personalnummer) {
 		this.datenbank.setSQL("SELECT konfession FROM konfession WHERE konfession.personalnummer=?;");
 		this.datenbank.setInt(personalnummer);
@@ -45,13 +49,15 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
-	public void a5(String personalnummer) {
+	@Override
+	public void a5(String berufsId) {
 		this.datenbank.setSQL("SELECT medfachrichtung FROM medfachrichtung WHERE medFachrichtung.berufsId=?");
-		this.datenbank.setInt(personalnummer);
+		this.datenbank.setInt(berufsId);
 
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void b1(String personalnummer) {
 		this.datenbank.setSQL("SELECT geraetename.geraetename, mitarbeiter.personalnummer, mitarbeiter.name\r\n"
 				+ "FROM mitarbeiter\r\n"
@@ -64,6 +70,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void b2() {
 		this.datenbank.setSQL(
 				"SELECT mitarbeiter.personalnummer, mitarbeiter.name, arbeitszeit.schichtId, arbeitszeit.dienstende\r\n"
@@ -75,6 +82,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void b3(String berechtigung, String berechtigungsobjekt) {
 		this.datenbank.setSQL(
 				"SELECT mitarbeiter.personalnummer, mitarbeiter.name, berechtigungen.darfEditieren, berechtigungsname.berechtigungsname\r\n"
@@ -90,6 +98,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void b4(String stadtname, String stellenanteil) {
 		this.datenbank.setSQL(
 				"SELECT mitarbeiter.personalnummer, mitarbeiter.name, stadtname.stadtname ,stundenuebersicht.stellenanteil\r\n"
@@ -106,6 +115,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
+	@Override
 	public void b5(String geschlecht, String konfession, String rolle, String versicherungsname) {
 		this.datenbank.setSQL(
 				"SELECT mitarbeiter.personalnummer, mitarbeiter.name, konfession.konfession, geschlecht.geschlecht, rolle.rolle, versicherungsname.versicherungsname\r\n"
