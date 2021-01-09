@@ -75,7 +75,7 @@ public class Datenzugriff implements iDatenzugriff {
 		this.anfrageAuswerten();
 	}
 
-	public void b3(String berechtigung, String objekt) {
+	public void b3(String berechtigung, String berechtigungsobjekt) {
 		this.datenbank.setSQL(
 				"SELECT mitarbeiter.personalnummer, mitarbeiter.name, berechtigungen.darfEditieren, berechtigungsname.berechtigungsname\r\n"
 						+ "FROM mitarbeiter\r\n"
@@ -85,7 +85,7 @@ public class Datenzugriff implements iDatenzugriff {
 						+ "INNER JOIN berechtigungsname ON berechtigungsname.berechtigungsId = berechtigungen.berechtigungsId\r\n"
 						+ "WHERE berechtigungen." + berechtigung + " = 1\r\n"
 						+ "AND berechtigungsname.berechtigungsname = ?;");
-		this.datenbank.setString(objekt);
+		this.datenbank.setString(berechtigungsobjekt);
 
 		this.anfrageAuswerten();
 	}

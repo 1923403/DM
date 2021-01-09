@@ -101,32 +101,27 @@ public class Datenbanknavigation {
 
 		switch (this.aktionWaehlen()) {
 			case "1":
-				System.out.println("\nBitte geben Sie eine Personalnummer ein:");
-				this.datenzugriff.a1(this.benutzereingabe());
+				this.datenzugriff.a1(this.eingabePersonalnummer());
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe3();
 				break;
 			case "2":
-				System.out.println("\nBitte geben Sie eine Personalnummer ein:");
-				this.datenzugriff.a2(this.benutzereingabe());
+				this.datenzugriff.a2(this.eingabePersonalnummer());
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe3();
 				break;
 			case "3":
-				System.out.println("\nBitte geben Sie eine Personalnummer ein:");
-				this.datenzugriff.a3(this.benutzereingabe());
+				this.datenzugriff.a3(this.eingabePersonalnummer());
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe3();
 				break;
 			case "4":
-				System.out.println("\nBitte geben Sie eine Personalnummer ein:");
-				this.datenzugriff.a4(this.benutzereingabe());
+				this.datenzugriff.a4(this.eingabePersonalnummer());
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe3();
 				break;
 			case "5":
-				System.out.println("\nBitte geben Sie eine Berufs-ID ein:");
-				this.datenzugriff.a5(this.benutzereingabe());
+				this.datenzugriff.a5(this.eingabeBerufsId());
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe3();
 				break;
@@ -153,8 +148,7 @@ public class Datenbanknavigation {
 
 		switch (this.aktionWaehlen()) {
 			case "1":
-				System.out.println("\nBitte geben Sie eine Personalnummer ein:");
-				this.datenzugriff.b1(this.benutzereingabe());
+				this.datenzugriff.b1(this.eingabePersonalnummer());
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe4();
 				break;
@@ -164,40 +158,24 @@ public class Datenbanknavigation {
 				this.statementsAufgabe4();
 				break;
 			case "3":
-				System.out.println("\nBitte geben Sie das Objekt an, für das Sie die Rechte einsehen wollen:");
-				var objekt = this.benutzereingabe();
-
-				System.out.println("Bitte geben Sie die Art der Berechtigung an:");
-				var berechtigung = this.benutzereingabe();
-
-				this.datenzugriff.b3(berechtigung, objekt);
+				var berechtigungsobjekt = this.eingabeBerechtigungsobjekt();
+				var berechtigung = this.eingabeBerechtigung();
+				this.datenzugriff.b3(berechtigung, berechtigungsobjekt);
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe4();
 				break;
 			case "4":
-				System.out.println("\nBitte geben Sie eine Stadt ein:");
-				var stadt = this.benutzereingabe();
-
-				System.out.println("Bitte geben Sie einen Stellenanteil ein:");
-				var stellenanteil = this.benutzereingabe();
-
+				var stadt = this.eingabeStadt();
+				var stellenanteil = this.eingabeStellenanteil();
 				this.datenzugriff.b4(stadt, stellenanteil);
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe4();
 				break;
 			case "5":
-				System.out.println("\nBitte geben Sie ein Geschlecht ein:");
-				var geschlecht = this.benutzereingabe();
-
-				System.out.println("Bitte geben Sie eine Konfession ein:");
-				var konfession = this.benutzereingabe();
-
-				System.out.println("Bitte geben Sie eine Rolle ein:");
-				var rolle = this.benutzereingabe();
-
-				System.out.println("Bitte geben Sie einen Versicherungsnamen ein:");
-				var versicherungsname = this.benutzereingabe();
-
+				var geschlecht = this.eingabeGeschlecht();
+				var konfession = this.eingabeKonfession();
+				var rolle = this.eingabeRolle();
+				var versicherungsname = this.eingabeVersicherungsname();
 				this.datenzugriff.b5(geschlecht, konfession, rolle, versicherungsname);
 				this.nachEingabeFortsetzen();
 				this.statementsAufgabe4();
@@ -232,12 +210,9 @@ public class Datenbanknavigation {
 	private void sqlStatementEingeben() {
 		System.out.println("\nBitte geben Sie Ihr SQL-Statement ein:");
 		var sqlStatement = this.benutzereingabe();
-
 		this.datenzugriff.anfrageAbsetzen(sqlStatement);
 
 		this.nachEingabeFortsetzen();
-//		System.out.println("\n[Mit beliebiger Eingabe fortsetzen]");
-//		this.benutzereingabe();
 	}
 
 	private void verbindungSchliessen() {
@@ -271,6 +246,87 @@ public class Datenbanknavigation {
 
 	private String eingabePasswort() {
 		System.out.println("Bitte geben Sie das Passwort ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabePersonalnummer() {
+		System.out.println("\nMögliche Personalnummern:");
+		this.datenzugriff.anfrageAbsetzen("SELECT personalnummer FROM mitarbeiter;");
+
+		System.out.println("\nBitte geben Sie eine Personalnummer ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeBerufsId() {
+		System.out.println("\nMögliche Berufs-IDs:");
+		this.datenzugriff.anfrageAbsetzen("SELECT berufsid FROM beruf;");
+
+		System.out.println("\nBitte geben Sie eine Berufs-ID ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeBerechtigungsobjekt() {
+		System.out.println("\nMögliche Berechtigungsobjekte:");
+		this.datenzugriff.anfrageAbsetzen("SELECT berechtigungsname FROM berechtigungsname;");
+
+		System.out.println(
+				"\nBitte geben Sie das Berechtigungsobjekt an, für das Sie die Rechte einsehen wollen:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeBerechtigung() {
+		System.out.println("\nMögliche Berechtigungen:");
+		this.datenzugriff.anfrageAbsetzen("SELECT darfEinsehen, darfEditieren FROM berechtigungen LIMIT 1;");
+
+		System.out.println("\nBitte geben Sie die Art der Berechtigung an:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeStadt() {
+		System.out.println("\nMögliche Städte:");
+		this.datenzugriff.anfrageAbsetzen("SELECT stadtname FROM stadtname;");
+
+		System.out.println("\nBitte geben Sie eine Stadt ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeStellenanteil() {
+		System.out.println("\nExistierende Stellenanteile:");
+		this.datenzugriff.anfrageAbsetzen("SELECT stellenanteil FROM stundenuebersicht;");
+
+		System.out.println("Bitte geben Sie einen Stellenanteil ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeGeschlecht() {
+		System.out.println("\nMögliche Geschlechter:");
+		this.datenzugriff.anfrageAbsetzen("SELECT geschlecht FROM geschlecht;");
+
+		System.out.println("\nBitte geben Sie ein Geschlecht ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeKonfession() {
+		System.out.println("\nMögliche Konfessionen:");
+		this.datenzugriff.anfrageAbsetzen("SELECT konfession FROM konfession;");
+
+		System.out.println("\nBitte geben Sie eine Konfession ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeRolle() {
+		System.out.println("\nMögliche Rollen:");
+		this.datenzugriff.anfrageAbsetzen("SELECT rolle FROM rolle;");
+
+		System.out.println("\nBitte geben Sie eine Rolle ein:");
+		return this.benutzereingabe();
+	}
+
+	private String eingabeVersicherungsname() {
+		System.out.println("\nMögliche Versicherungsnamen:");
+		this.datenzugriff.anfrageAbsetzen("SELECT versicherungsname FROM versicherungsname;");
+
+		System.out.println("\nBitte geben Sie einen Versicherungsnamen ein:");
 		return this.benutzereingabe();
 	}
 
