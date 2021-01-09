@@ -108,7 +108,7 @@ public class Datenzugriff implements iDatenzugriff {
 						+ "INNER JOIN stadtname ON stadtname.plz = stadt.plz\r\n"
 						+ "INNER JOIN stundenuebersicht ON stundenuebersicht.personalnummer = mitarbeiter.personalnummer\r\n"
 						+ "WHERE stadtname.stadtname=?\r\n"
-						+ "AND stundenuebersicht.stellenanteil=100;");
+						+ "AND stundenuebersicht.stellenanteil=?;");
 		this.datenbank.setString(stadtname);
 		this.datenbank.setDecimal(stellenanteil);
 
