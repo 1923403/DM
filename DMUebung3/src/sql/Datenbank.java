@@ -1,5 +1,6 @@
 package sql;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.util.LinkedHashMap;
 public class Datenbank {
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
+	private int positionPrepared = 1;
 
 	public Connection getConnection() {
 		return this.connection;
@@ -26,7 +28,15 @@ public class Datenbank {
 		try {
 			return this.konvertiereZuJava(this.preparedStatement.executeQuery());
 		} catch (SQLException e) {
-			throw new RuntimeException("Fehler beim Verarbeiten des Statements: " + e.getMessage());
+			try {
+				this.preparedStatement.execute();
+				System.out.println("Operation erfolgreich durchgeführt!");
+				return new ArrayList<>();
+			} catch (Exception e2) {
+				throw new RuntimeException("Fehler beim Verarbeiten des Statements: " + e2.getMessage());
+			}
+		} finally {
+			this.positionPrepared = 1;
 		}
 	}
 
@@ -62,6 +72,76 @@ public class Datenbank {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("SQL-Fehler: " + e.getMessage());
+		}
+	}
+
+	public void setString(char c) {
+		try {
+			this.setString("" + c);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setString '" + c + "': " + e.getMessage());
+		}
+	}
+
+	public void setString(String s) {
+		try {
+			this.preparedStatement.setString(this.positionPrepared++, s);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setString'" + s + "': " + e.getMessage());
+		}
+	}
+
+	public void setInt(int i) {
+		try {
+			this.preparedStatement.setInt(this.positionPrepared++, i);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setInt '" + i + "': " + e.getMessage());
+		}
+	}
+
+	public void setInt(String s) {
+		try {
+			this.setInt(Integer.parseInt(s));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setInt '" + s + "': " + e.getMessage());
+		}
+	}
+
+	public void setDouble(double d) {
+		try {
+			this.preparedStatement.setDouble(this.positionPrepared++, d);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setDouble '" + d + "': " + e.getMessage());
+		}
+	}
+
+	public void setDouble(String s) {
+		try {
+			this.setDouble(Double.parseDouble(s));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setDouble '" + s + "': " + e.getMessage());
+		}
+	}
+
+	public void setDecimal(BigDecimal d) {
+		try {
+			this.preparedStatement.setBigDecimal(this.positionPrepared++, d);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public void setDecimal(String s) {
+		try {
+			this.setDecimal(BigDecimal.valueOf(Double.parseDouble(s)));
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 

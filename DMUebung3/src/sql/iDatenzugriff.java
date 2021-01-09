@@ -5,5 +5,7 @@ public interface iDatenzugriff {
 
 	void anfrageAbsetzen(String sql);
 
+	void anfrageAuswerten();
+
 	void verbindungSchliessen();
 }
