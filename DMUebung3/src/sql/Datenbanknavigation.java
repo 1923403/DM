@@ -254,7 +254,13 @@ public class Datenbanknavigation {
 		this.datenzugriff.anfrageAbsetzen("SELECT personalnummer FROM mitarbeiter;");
 
 		System.out.println("\nBitte geben Sie eine Personalnummer ein:");
-		return this.benutzereingabe();
+		var personalnummer = this.benutzereingabe();
+
+		if (this.istInteger(personalnummer))
+			return personalnummer;
+		else {
+			return this.eingabePersonalnummer();
+		}
 	}
 
 	private String eingabeBerufsId() {
@@ -262,7 +268,13 @@ public class Datenbanknavigation {
 		this.datenzugriff.anfrageAbsetzen("SELECT berufsid FROM beruf;");
 
 		System.out.println("\nBitte geben Sie eine Berufs-ID ein:");
-		return this.benutzereingabe();
+		var berufsId = this.benutzereingabe();
+
+		if (this.istInteger(berufsId))
+			return berufsId;
+		else {
+			return this.eingabeBerufsId();
+		}
 	}
 
 	private String eingabeBerechtigungsobjekt() {
@@ -294,8 +306,14 @@ public class Datenbanknavigation {
 		System.out.println("\nExistierende Stellenanteile:");
 		this.datenzugriff.anfrageAbsetzen("SELECT stellenanteil FROM stundenuebersicht;");
 
-		System.out.println("Bitte geben Sie einen Stellenanteil ein:");
-		return this.benutzereingabe();
+		System.out.println("\nBitte geben Sie einen Stellenanteil ein:");
+		var stellenanteil = this.benutzereingabe();
+
+		if (this.istDouble(stellenanteil))
+			return stellenanteil;
+		else {
+			return this.eingabeStellenanteil();
+		}
 	}
 
 	private String eingabeGeschlecht() {
@@ -328,6 +346,26 @@ public class Datenbanknavigation {
 
 		System.out.println("\nBitte geben Sie einen Versicherungsnamen ein:");
 		return this.benutzereingabe();
+	}
+
+	private boolean istInteger(String eingabe) {
+		try {
+			Integer.parseInt(eingabe);
+		} catch (Exception e) {
+			System.out.println("\nBitte geben Sie einen gültigen Integerwert ein!");
+			return false;
+		}
+		return true;
+	}
+
+	private boolean istDouble(String eingabe) {
+		try {
+			Double.parseDouble(eingabe);
+		} catch (Exception e) {
+			System.out.println("\nBitte geben Sie einen gültigen Doublewert ein!");
+			return false;
+		}
+		return true;
 	}
 
 	private String benutzereingabe() {
