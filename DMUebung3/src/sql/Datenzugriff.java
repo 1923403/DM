@@ -78,7 +78,6 @@ public class Datenzugriff implements iDatenzugriff {
 						+ "INNER JOIN stundenuebersicht on stundenuebersicht.personalnummer = mitarbeiter.personalnummer\r\n"
 						+ "INNER JOIN arbeitszeit ON arbeitszeit.personalnummer = stundenuebersicht.personalnummer\r\n"
 						+ "WHERE arbeitszeit.dienstende IS NULL;");
-
 		this.anfrageAuswerten();
 	}
 
@@ -148,7 +147,7 @@ public class Datenzugriff implements iDatenzugriff {
 				System.out.println(datensatz);
 			}
 		else
-			System.out.println("Das gewählte SQL-Statement liefert keine Datenbankeinträge.");
+			System.out.println("Das eingegebene SQL-Statement liefert keine Datenbankeinträge.");
 	}
 
 	@Override
