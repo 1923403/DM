@@ -251,7 +251,7 @@ public class Datenbanknavigation {
 
 	private String eingabePersonalnummer() {
 		System.out.println("\nMögliche Personalnummern:");
-		this.datenzugriff.anfrageAbsetzen("SELECT personalnummer FROM mitarbeiter;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT personalnummer FROM mitarbeiter;");
 
 		System.out.println("\nBitte geben Sie eine Personalnummer ein:");
 		var personalnummer = this.benutzereingabe();
@@ -265,7 +265,7 @@ public class Datenbanknavigation {
 
 	private String eingabeBerufsId() {
 		System.out.println("\nMögliche Berufs-IDs:");
-		this.datenzugriff.anfrageAbsetzen("SELECT berufsid FROM beruf;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT berufsid FROM beruf;");
 
 		System.out.println("\nBitte geben Sie eine Berufs-ID ein:");
 		var berufsId = this.benutzereingabe();
@@ -279,7 +279,7 @@ public class Datenbanknavigation {
 
 	private String eingabeBerechtigungsobjekt() {
 		System.out.println("\nMögliche Berechtigungsobjekte:");
-		this.datenzugriff.anfrageAbsetzen("SELECT berechtigungsname FROM berechtigungsname;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT berechtigungsname FROM berechtigungsname;");
 
 		System.out.println(
 				"\nBitte geben Sie das Berechtigungsobjekt an, für das Sie die Rechte einsehen wollen:");
@@ -288,7 +288,7 @@ public class Datenbanknavigation {
 
 	private String eingabeBerechtigung() {
 		System.out.println("\nMögliche Berechtigungen:");
-		this.datenzugriff.anfrageAbsetzen("SELECT darfEinsehen, darfEditieren FROM berechtigungen LIMIT 1;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT darfEinsehen, darfEditieren FROM berechtigungen LIMIT 1;");
 
 		System.out.println("\nBitte geben Sie die Art der Berechtigung an:");
 		return this.benutzereingabe();
@@ -296,7 +296,7 @@ public class Datenbanknavigation {
 
 	private String eingabeStadt() {
 		System.out.println("\nMögliche Städte:");
-		this.datenzugriff.anfrageAbsetzen("SELECT stadtname FROM stadtname;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT stadtname FROM stadtname;");
 
 		System.out.println("\nBitte geben Sie eine Stadt ein:");
 		return this.benutzereingabe();
@@ -304,7 +304,7 @@ public class Datenbanknavigation {
 
 	private String eingabeStellenanteil() {
 		System.out.println("\nExistierende Stellenanteile:");
-		this.datenzugriff.anfrageAbsetzen("SELECT stellenanteil FROM stundenuebersicht;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT stellenanteil FROM stundenuebersicht;");
 
 		System.out.println("\nBitte geben Sie einen Stellenanteil ein:");
 		var stellenanteil = this.benutzereingabe();
@@ -318,7 +318,7 @@ public class Datenbanknavigation {
 
 	private String eingabeGeschlecht() {
 		System.out.println("\nMögliche Geschlechter:");
-		this.datenzugriff.anfrageAbsetzen("SELECT geschlecht FROM geschlecht;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT geschlecht FROM geschlecht;");
 
 		System.out.println("\nBitte geben Sie ein Geschlecht ein:");
 		return this.benutzereingabe();
@@ -326,7 +326,7 @@ public class Datenbanknavigation {
 
 	private String eingabeKonfession() {
 		System.out.println("\nMögliche Konfessionen:");
-		this.datenzugriff.anfrageAbsetzen("SELECT konfession FROM konfession;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT konfession FROM konfession;");
 
 		System.out.println("\nBitte geben Sie eine Konfession ein:");
 		return this.benutzereingabe();
@@ -334,7 +334,7 @@ public class Datenbanknavigation {
 
 	private String eingabeRolle() {
 		System.out.println("\nMögliche Rollen:");
-		this.datenzugriff.anfrageAbsetzen("SELECT rolle FROM rolle;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT rolle FROM rolle;");
 
 		System.out.println("\nBitte geben Sie eine Rolle ein:");
 		return this.benutzereingabe();
@@ -342,7 +342,7 @@ public class Datenbanknavigation {
 
 	private String eingabeVersicherungsname() {
 		System.out.println("\nMögliche Versicherungsnamen:");
-		this.datenzugriff.anfrageAbsetzen("SELECT versicherungsname FROM versicherungsname;");
+		this.datenzugriff.anfrageAbsetzen("SELECT DISTINCT versicherungsname FROM versicherungsname;");
 
 		System.out.println("\nBitte geben Sie einen Versicherungsnamen ein:");
 		return this.benutzereingabe();

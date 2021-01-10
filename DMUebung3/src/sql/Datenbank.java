@@ -24,7 +24,7 @@ public class Datenbank {
 		this.connection = DriverManager.getConnection(url);
 	}
 
-	public ArrayList<LinkedHashMap<String, String>> lesenJava() throws SQLException {
+	public ArrayList<LinkedHashMap<String, String>> zugriffJava() throws SQLException {
 		try {
 			return this.konvertiereZuJava(this.preparedStatement.executeQuery());
 		} catch (SQLException e) {

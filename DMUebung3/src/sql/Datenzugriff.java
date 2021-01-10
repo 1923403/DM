@@ -143,8 +143,8 @@ public class Datenzugriff implements iDatenzugriff {
 	public void anfrageAuswerten() {
 		System.out.println();
 		try {
-			if (!this.datenbank.lesenJava().isEmpty())
-				for (LinkedHashMap<String, String> datensatz : this.datenbank.lesenJava())
+			if (!this.datenbank.zugriffJava().isEmpty())
+				for (LinkedHashMap<String, String> datensatz : this.datenbank.zugriffJava())
 					System.out.println(datensatz);
 			else
 				System.out.println("Das eingegebene SQL-Statement liefert keine Datenbankeinträge.");
