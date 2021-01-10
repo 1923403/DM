@@ -1,5 +1,6 @@
 package sql;
 
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
 public class Datenzugriff implements iDatenzugriff {
@@ -141,13 +142,15 @@ public class Datenzugriff implements iDatenzugriff {
 	@Override
 	public void anfrageAuswerten() {
 		System.out.println();
-
-		if (!this.datenbank.lesenJava().isEmpty())
-			for (LinkedHashMap<String, String> datensatz : this.datenbank.lesenJava()) {
-				System.out.println(datensatz);
-			}
-		else
-			System.out.println("Das eingegebene SQL-Statement liefert keine Datenbankeinträge.");
+		try {
+			if (!this.datenbank.lesenJava().isEmpty())
+				for (LinkedHashMap<String, String> datensatz : this.datenbank.lesenJava())
+					System.out.println(datensatz);
+			else
+				System.out.println("Das eingegebene SQL-Statement liefert keine Datenbankeinträge.");
+		} catch (SQLException e) {
+			System.out.println("Kein gültiges SQL-Statement!");
+		}
 	}
 
 	@Override

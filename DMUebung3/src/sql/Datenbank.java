@@ -24,17 +24,13 @@ public class Datenbank {
 		this.connection = DriverManager.getConnection(url);
 	}
 
-	public ArrayList<LinkedHashMap<String, String>> lesenJava() {
+	public ArrayList<LinkedHashMap<String, String>> lesenJava() throws SQLException {
 		try {
 			return this.konvertiereZuJava(this.preparedStatement.executeQuery());
 		} catch (SQLException e) {
-			try {
-				this.preparedStatement.execute();
-				System.out.println("SQL-Statement erfolgreich ausgeführt!\n");
-				return new ArrayList<>();
-			} catch (Exception e2) {
-				throw new RuntimeException("Fehler beim Verarbeiten des Statements: " + e2.getMessage());
-			}
+			this.preparedStatement.execute();
+			System.out.println("SQL-Statement erfolgreich ausgeführt!\n");
+			return new ArrayList<>();
 		} finally {
 			this.positionPrepared = 1;
 		}
