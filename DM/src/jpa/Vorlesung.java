@@ -8,12 +8,12 @@ import jakarta.persistence.Transient;
 @Entity
 @Table(name = "Vorlesung")
 public class Vorlesung {
-	@Transient
-	private Professor gelesenVon;
 	@Id
 	private int id;
-	private int sws;
 	private String titel;
+	private int sws;
+	@Transient
+	private Professor gelesenVon;
 
 	public Vorlesung() {
 		// noetig, um das Objekt automatisiert vom ORM erzeugen zu lassen
@@ -24,6 +24,7 @@ public class Vorlesung {
 		this.setTitel(titel);
 		this.setSws(sws);
 		this.setGelesenVon(gelesenVon);
+		this.gelesenVon.addVorlesung(this);
 	}
 
 	public Professor getGelesenVon() {

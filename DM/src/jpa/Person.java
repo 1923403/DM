@@ -10,9 +10,9 @@ import jakarta.persistence.Table;
 @Table(name = "Person")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
-	private String name;
 	@Id
 	private int personennummer;
+	private String name;
 
 	public Person() {
 	}

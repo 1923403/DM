@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Professor")
 public class Professor extends Person {
-	private String name;
 	@Id
 	private int personalnummer;
 	@OneToMany(cascade = CascadeType.ALL)
@@ -33,22 +32,12 @@ public class Professor extends Person {
 		this.vorlesungen.add(v);
 	}
 
-	@Override
-	public String getName() {
-		return this.name;
-	}
-
 	public int getPersonalnummer() {
 		return this.personalnummer;
 	}
 
 	public List<Vorlesung> getVorlesungen() {
 		return this.vorlesungen;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public void setPersonalnummer(int personalnummer) {
